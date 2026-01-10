@@ -22,9 +22,9 @@ ADD https://api.github.com/repos/tsduck/tsduck/git/refs/tags/$TSDUCK_VERSION /tm
 
 RUN git clone --depth 1 -b $TSDUCK_VERSION https://github.com/tsduck/tsduck.git && \
     cd tsduck && \
-    mkdir -p /out && \
-    make SYSPREFIX=/out LLVM=1 NODEKTEC=1 NOHIDES=1 NOVATEK=1 NORIST=1 NOSRT=1 NOJAVA=1 NODOXYGEN=1 NODOC=1 NOTEST=1 NOGITHUB=1 -j"$(nproc)" && \
-    make SYSPREFIX=/out LLVM=1 NODEKTEC=1 NOHIDES=1 NOVATEK=1 NORIST=1 NOSRT=1 NOJAVA=1 NODOXYGEN=1 NODOC=1 NOTEST=1 NOGITHUB=1 -j"$(nproc)" install
+    mkdir -p /usr/local/tsduck && \
+    make SYSPREFIX=/usr/local/tsduck LLVM=1 NODEKTEC=1 NOHIDES=1 NOVATEK=1 NORIST=1 NOSRT=1 NOJAVA=1 NODOXYGEN=1 NODOC=1 NOTEST=1 NOGITHUB=1 -j"$(nproc)" && \
+    make SYSPREFIX=/usr/local/tsduck LLVM=1 NODEKTEC=1 NOHIDES=1 NOVATEK=1 NORIST=1 NOSRT=1 NOJAVA=1 NODOXYGEN=1 NODOC=1 NOTEST=1 NOGITHUB=1 -j"$(nproc)" install
 
 FROM scratch AS release
-COPY --from=base /out /
+COPY --from=base /usr/local/tsduck /usr/local/tsduck
