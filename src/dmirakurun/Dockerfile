@@ -32,11 +32,14 @@ RUN \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y \
+    make \
     vim \
     procps \
     htop \
     usbutils \
     ca-certificates \
+    gcc \
+    g++ \
     pkg-config \
     pcscd \
     libpcsclite-dev \
@@ -56,7 +59,6 @@ COPY --from=dantto4k /bin/dantto4k /usr/local/bin/dantto4k
 RUN echo /usr/local/tsduck/lib > /etc/ld.so.conf.d/tsduck.conf && \
     ldconfig && \
     ln -sf /usr/local/tsduck/share/tsduck /usr/local/share/tsduck
-
 
 CMD ["./docker/container-init.sh"]
 
