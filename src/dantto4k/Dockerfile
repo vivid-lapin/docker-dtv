@@ -23,4 +23,4 @@ RUN git clone --depth 1 --branch ${DANTTO4K_VERSION} --recurse-submodules https:
     make install
 
 FROM scratch AS release
-COPY --from=base /usr/local/bin/dantto4k /usr/local/bin/dantto4k
+COPY --from=base /usr/local/bin/dantto4k /bin/dantto4k
