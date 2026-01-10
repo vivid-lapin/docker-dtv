@@ -1,9 +1,9 @@
-name: tsduck
+name: llvm
 
 on:
   push:
     paths:
-      - "src/tsduck/**"
+      - "src/llvm/**"
 
   workflow_dispatch:
 
@@ -17,5 +17,5 @@ jobs:
   build:
     uses: SlashNephy/actions/.github/workflows/build-docker-image.yml@3dbec9cde813d07525321de7ba55814cebf26c81 # v0.0.1
     with:
-      image-name: ghcr.io/vivid-lapin/docker-dtv-tsduck
-      context: src/tsduck
+      image-name: ghcr.io/vivid-lapin/docker-dtv-llvm
+      context: src/llvm
