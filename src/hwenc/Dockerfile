@@ -23,7 +23,7 @@ RUN \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    ca-certificates curl git gpg tzdata unzip xz-utils && \
+    ca-certificates curl git gpg tzdata unzip xz-utils locales && \
     # Intel GPU リポジトリ
     curl -fsSL https://repositories.intel.com/gpu/intel-graphics.key | gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics-keyring.gpg && \
     echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics-keyring.gpg] https://repositories.intel.com/gpu/ubuntu jammy unified' > /etc/apt/sources.list.d/intel-gpu-jammy.list && \
@@ -43,7 +43,14 @@ RUN \
     # NVIDIA GPU 関連のライブラリ
     cuda-nvrtc-12-8 libnpp-12-8 \
     # AMD GPU 関連のライブラリ
-    amf-amdgpu-pro libamdenc-amdgpu-pro libdrm2-amdgpu ocl-icd-libopencl1 rocm-opencl-runtime vulkan-amdgpu-pro
+    amf-amdgpu-pro libamdenc-amdgpu-pro libdrm2-amdgpu ocl-icd-libopencl1 rocm-opencl-runtime vulkan-amdgpu-pro && \
+    printf "en_US.UTF-8 UTF-8\n" >> /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    /usr/sbin/locale-gen
+
+ENV LANG="en_US.UTF-8" \
+    LANGUAGE="en_US.UTF-8" \
+    LC_ALL="en_US.UTF-8"
 
 # thirdparty
 RUN curl -fsSL https://nightly.link/tsukumijima/KonomiTV/actions/runs/20725734876/thirdparty-linux.tar.xz.zip | funzip | tar -xJf - -C .
