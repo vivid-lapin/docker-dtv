@@ -1,0 +1,14 @@
+services:
+  tsreplacer:
+    image: ghcr.io/vivid-lapin/docker-dtv-tsreplacer:master
+    environment:
+      BASE: /media/records/
+      WATCH: ts
+      OUT: replaced
+      KARI: temp
+      ENCODER: ./thirdparty/QSVEncC/QSVEncC.elf -i - --input-format mpegts --tff --vpp-deinterlace normal -c hevc --icq 23 --gop-len 90 --output-format mpegts --avsync vfr -o -
+    devices:
+      - '/dev/dri/:/dev/dri/'
+    volumes:
+      - /media/records/:/media/records/
+      - /etc/localtime:/etc/localtime:ro
