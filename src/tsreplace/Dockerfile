@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/vivid-lapin/docker-dtv-hwenc:a296fa8
+FROM ghcr.io/vivid-lapin/docker-dtv-hwenc:4e4122b
 
 RUN \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
