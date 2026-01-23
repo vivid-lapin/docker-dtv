@@ -16,14 +16,12 @@ ENV TZ=Asia/Tokyo
 # apt-get に対話的に設定を確認されないための設定
 ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /root
-
 RUN \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    ca-certificates curl git gpg tzdata unzip xz-utils locales && \
+    ca-certificates curl git gpg tzdata unzip xz-utils locales sudo && \
     # Intel GPU リポジトリ
     curl -fsSL https://repositories.intel.com/gpu/intel-graphics.key | gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics-keyring.gpg && \
     echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics-keyring.gpg] https://repositories.intel.com/gpu/ubuntu jammy unified' > /etc/apt/sources.list.d/intel-gpu-jammy.list && \
@@ -52,5 +50,13 @@ ENV LANG="en_US.UTF-8" \
     LANGUAGE="en_US.UTF-8" \
     LC_ALL="en_US.UTF-8"
 
+RUN groupadd --gid 993 render && \
+    useradd -m --uid 1000 --groups sudo,video,render nonroot && \
+    echo nonroot:nonroot | chpasswd && \
+    echo 'nonroot ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER nonroot
+
+WORKDIR /work
+
 # thirdparty
-RUN curl -fsSL https://nightly.link/tsukumijima/KonomiTV/actions/runs/20725734876/thirdparty-linux.tar.xz.zip | funzip | tar -xJf - -C .
+RUN curl -fsSL https://github.com/tsukumijima/KonomiTV/releases/download/v0.13.0/thirdparty-linux.tar.xz | tar -xJf - -C .
