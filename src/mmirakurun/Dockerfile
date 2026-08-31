@@ -12,14 +12,14 @@ RUN \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y git
 
-ADD https://api.github.com/repos/otya128/MMirakurun/git/refs/tags/3.9.0-rc.4-4K /tmp/git.json
+ADD https://api.github.com/repos/neneka/MMirakurun/git/refs/heads/master /tmp/git.json
 
 WORKDIR /app
 
 ENV DOCKER=YES NODE_ENV=production
 
 RUN \
-    git clone --depth 1 --recursive -b 3.9.0-rc.4-4K https://github.com/otya128/MMirakurun.git . && \
+    git clone --depth 1 --recursive https://github.com/neneka/MMirakurun.git . && \
     npm ci --include=dev && \
     npm run build && \
     npm ci --omit=dev
