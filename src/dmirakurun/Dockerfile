@@ -33,7 +33,6 @@ RUN \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y \
     make \
-    vim \
     procps \
     htop \
     usbutils \
@@ -48,7 +47,8 @@ RUN \
     pcsc-tools \
     dvb-tools \
     libedit2 \
-    libcurl4
+    libcurl4 \
+    curl
 
 COPY --from=build /app /app
 
