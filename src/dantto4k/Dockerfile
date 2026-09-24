@@ -18,7 +18,6 @@ RUN echo /usr/local/tsduck/lib > /etc/ld.so.conf.d/tsduck.conf && \
 
 RUN git clone --depth 1 --branch ${DANTTO4K_VERSION} --recurse-submodules https://github.com/nekohkr/dantto4k.git && \
     cd dantto4k && \
-    sed -i 's/^CXXFLAGS = \(.*\)/CXXFLAGS = \1 -include cstddef -include cstdint/' Makefile && \
     PKG_CONFIG_PATH="/usr/local/tsduck/share/pkgconfig:${PKG_CONFIG_PATH}" make -j"$(nproc)" && \
     make install
 
