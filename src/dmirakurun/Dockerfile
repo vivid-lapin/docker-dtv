@@ -2,7 +2,7 @@
 
 FROM ghcr.io/vivid-lapin/docker-dtv-tsduck:08ef8d6 AS tsduck
 FROM ghcr.io/vivid-lapin/docker-dtv-recdvb:d094387 AS recdvb
-FROM ghcr.io/vivid-lapin/docker-dtv-dantto4k:6692f18 AS dantto4k
+FROM ghcr.io/vivid-lapin/docker-dtv-dantto4k:6cbf816 AS dantto4k
 
 FROM node:22.14.0-bookworm-slim AS base
 FROM base AS build
