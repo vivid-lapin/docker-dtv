@@ -2,24 +2,26 @@
 
 FROM ghcr.io/vivid-lapin/docker-dtv-tsduck:08ef8d6 AS tsduck
 FROM ghcr.io/vivid-lapin/docker-dtv-recdvb:d094387 AS recdvb
-FROM ghcr.io/vivid-lapin/docker-dtv-dantto4k:6cbf816 AS dantto4k
+FROM ghcr.io/vivid-lapin/docker-dtv-dantto4k:f6978fe AS dantto4k
 
 FROM node:22.14.0-bookworm-slim AS base
 FROM base AS build
+
+ARG VERSION=4.1.5-d1
 
 RUN \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && apt-get install -y git
 
-ADD https://api.github.com/repos/neneka/DMirakurun/git/refs/heads/master /tmp/git.json
+ADD https://api.github.com/repos/jp-dtv-4k/DMirakurun/git/refs/tags/${VERSION} /tmp/git.json
 
 WORKDIR /app
 
 ENV DOCKER=YES NODE_ENV=production
 
 RUN \
-    git clone --depth 1 --recursive https://github.com/neneka/DMirakurun.git . && \
+    git clone --depth 1 --recursive -b ${VERSION} https://github.com/jp-dtv-4k/DMirakurun.git . && \
     npm ci --include=dev && \
     npm run build && \
     npm ci --omit=dev
