@@ -10,7 +10,7 @@ RUN \
     apt-get update && \
     apt-get install -y git make g++ libssl-dev libpcsclite-dev pcscd pkgconf libedit-dev zlib1g-dev
 
-ARG DANTTO4K_VERSION=main
+ARG DANTTO4K_VERSION=v1.0.2
 
 COPY --from=tsduck /usr/local/tsduck /usr/local/tsduck
 RUN echo /usr/local/tsduck/lib > /etc/ld.so.conf.d/tsduck.conf && \
